@@ -1,26 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
+import ShortcutItem from './ShortcutItem';
 import './App.css';
+import shortcutsData from './shortcutsData';
 
-function App() {
+class App extends Component {
+  constructor() {
+    super()
+    this.state={
+      shortcuts: shortcutsData
+    }
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  handleChange(id) {
+    this.setState(prevState => {
+      const updatedShortcuts = prevState.shortcuts.map(shortcut => {
+        if (shortcut.id === id) {
+          shortcut.completed = !shortcut.completed
+        }
+        return shortcut
+      })
+      return {
+        shortcuts: updatedShortcuts
+      }
+    })
+  }
+
+  render() {
+    const shortcutItems = this.state.shortcuts.map(item => <ShortcutItem key={item.id} item={item}
+      handleChange={this.handleChange}/>)
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="shortcut-list">
+    <h1> Mac Shortcuts List:</h1>
+    {shortcutItems}
     </div>
-  );
+  )
+}
 }
 
 export default App;

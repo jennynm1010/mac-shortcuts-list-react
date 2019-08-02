@@ -3,7 +3,7 @@ import React from 'react';
 function ShortcutItem (props) {
     const completedStyle = {
         fontStyle: "italic",
-        color: "#cdcdcd",
+        color: "lightblue",
         textDecoration: "line-through"
     }
     return (
